@@ -1,0 +1,11 @@
+export type TutorialStep =
+  | 'goHr'
+  | 'hire'
+  | 'goLever'
+  | 'produce'
+  | 'result'
+  | 'goSafe'
+  | 'allocate'
+  | 'upgradeMachine'
+  | 'expandFactory'
+  | 'done'

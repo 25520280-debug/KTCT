@@ -1,0 +1,14 @@
+node_modules
+dist
+
+.claude/
+
+# Local environment files may contain credentials; never commit them.
+.env
+.env.*
+!.env.example
+
+# Local logs and operating-system metadata.
+*.log
+.DS_Store
+Thumbs.db
