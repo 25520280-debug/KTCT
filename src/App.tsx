@@ -12,14 +12,18 @@ export default function App() {
   const [game, setGame] = useState<GameState | null>(null)
   const [screen, setScreen] = useState<'landing' | 'selection'>('landing')
   const start = (tierId: TierId) => setGame(createGame(tierId))
+  const exitGame = () => {
+    setGame(null)
+    setScreen('landing')
+  }
 
   return (
     <Stage>
       {game ? (
         game.phase === 'ended' ? (
-          <EndScreen game={game} onReplay={() => { setGame(null); setScreen('landing') }} />
+          <EndScreen game={game} onReplay={() => setGame(createGame(game.tierId))} onHome={exitGame} />
         ) : (
-          <GameScreen game={game} onChange={setGame} />
+          <GameScreen game={game} onChange={setGame} onExit={exitGame} />
         )
       ) : screen === 'landing' ? (
         <LandingScreen onPlay={() => setScreen('selection')} />

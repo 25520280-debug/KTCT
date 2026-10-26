@@ -1,3 +1,4 @@
+import { X } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import { CONFIG } from '../config'
 import MerchantSplash from './MerchantSplash'
@@ -8,9 +9,10 @@ interface Props {
   step: Exclude<TutorialStep, 'done' | 'result'>
   near: ZoneId | null
   onContinue: () => void
+  onSkip: () => void
 }
 
-export default function TutorialCoach({ step, near, onContinue }: Props) {
+export default function TutorialCoach({ step, near, onContinue, onSkip }: Props) {
   const t = CONFIG.text.tutorial
   const buttonRef = useRef<HTMLButtonElement>(null)
   const isMachine = step === 'upgradeMachine'
@@ -68,6 +70,14 @@ export default function TutorialCoach({ step, near, onContinue }: Props) {
             </span>
             <span className="h-[3px] flex-1 bg-ink/20" />
             <span className="text-[16px] font-black tracking-[0.12em] text-red">HƯỚNG DẪN</span>
+            <button
+              onClick={onSkip}
+              aria-label="Bỏ qua hướng dẫn"
+              title="Bỏ qua hướng dẫn"
+              className="btn flex size-[34px] shrink-0 items-center justify-center border-2 border-ink bg-amber"
+            >
+              <X size={20} strokeWidth={3} />
+            </button>
           </div>
 
           <h2 id="tutorial-title" className="mt-7 text-[32px] leading-tight font-black">

@@ -36,7 +36,7 @@ export default function ResultPopup({ game, onContinue, guided = false }: Props)
   const hasSurplus = !ending && result.m > 0
 
   return (
-    <Modal width={860} shake={alert !== null}>
+    <Modal width={860} shake={alert !== null} onClose={onContinue} closeLabel="Tiếp tục" closeAriaLabel="Đóng kết quả và tiếp tục">
       <div className="flex items-baseline justify-between">
         <h2 className="text-[30px] leading-none font-black">{fill(r.title, { turn: result.turn })}</h2>
         {!result.bankrupt && !result.strike && (

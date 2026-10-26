@@ -1,5 +1,6 @@
 import { Play } from 'lucide-react'
 import { useEffect, useRef } from 'react'
+import splashBackground from '../assets/splash-background.png'
 
 export default function LandingScreen({ onPlay }: { onPlay: () => void }) {
   const playRef = useRef<HTMLButtonElement>(null)
@@ -8,7 +9,7 @@ export default function LandingScreen({ onPlay }: { onPlay: () => void }) {
   return (
     <div className="relative h-full overflow-hidden bg-[#fff9df] text-ink">
       <img
-        src={`${import.meta.env.BASE_URL}assets/splash-background.png`}
+        src={splashBackground}
         alt=""
         className="absolute inset-0 h-full w-full object-cover"
       />

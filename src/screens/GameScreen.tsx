@@ -18,9 +18,10 @@ import { HUD_RIGHT, HUD_TOP, ROOMS, ZONES, type ZoneId } from '../world/layout'
 interface Props {
   game: GameState
   onChange: (game: GameState) => void
+  onExit: () => void
 }
 
-export default function GameScreen({ game, onChange }: Props) {
+export default function GameScreen({ game, onChange, onExit }: Props) {
   const w = CONFIG.text.world
   const [menu, setMenu] = useState<ZoneId | null>(null)
   const [near, setNear] = useState<ZoneId | null>(null)
@@ -292,7 +293,7 @@ export default function GameScreen({ game, onChange }: Props) {
         </div>
       )}
 
-      <Hud game={game} onHelp={() => setShowHelp(true)} />
+      <Hud game={game} onHelp={() => setShowHelp(true)} onExit={onExit} />
 
       {tutorialBriefing && tutorialStep !== 'done' && tutorialStep !== 'result' && !showHelp && (
         <TutorialCoach
@@ -302,6 +303,12 @@ export default function GameScreen({ game, onChange }: Props) {
             setTutorialBriefing(false)
             if (tutorialStep === 'upgradeMachine') setMenu('machine')
             if (tutorialStep === 'expandFactory') setMenu('gate')
+          }}
+          onSkip={() => {
+            setMachineGuideSeen(true)
+            setFactoryGuideSeen(true)
+            setTutorialStep('done')
+            setTutorialBriefing(false)
           }}
         />
       )}
@@ -313,11 +320,21 @@ export default function GameScreen({ game, onChange }: Props) {
           surplusWaiting={surplusWaiting}
           dispatch={dispatch}
           onProduce={produce}
+          onClose={() => setMenu(null)}
           tutorialStep={tutorialStep}
         />
       )}
-      {game.phase === 'event' && !animating && <EventPopup key={`event-${game.turn}`} game={game} onChange={applyGameChange} />}
-      {showResult && <ResultPopup key={`result-${game.turn}`} game={game} onContinue={closeResult} guided={tutorialStep === 'result'} />}
+      {game.phase === 'event' && !animating && (
+        <EventPopup key={`event-${game.turn}`} game={game} onChange={applyGameChange} onExit={onExit} />
+      )}
+      {showResult && (
+        <ResultPopup
+          key={`result-${game.turn}`}
+          game={game}
+          onContinue={closeResult}
+          guided={tutorialStep === 'result'}
+        />
+      )}
       {showHelp && <HowToPlay onClose={() => setShowHelp(false)} />}
     </div>
   )

@@ -1,4 +1,4 @@
-import { AlertTriangle, Banknote, BookOpen, Info, ShoppingBag, Siren, Smile, Target, type LucideIcon } from 'lucide-react'
+import { AlertTriangle, Banknote, BookOpen, Info, LogOut, ShoppingBag, Siren, Smile, Target, type LucideIcon } from 'lucide-react'
 import { CONFIG } from '../config'
 import * as G from '../engine/engine'
 import { fill, money } from '../engine/format'
@@ -79,7 +79,7 @@ function ValueRow({
 }
 
 // HUD luôn hiện: dải trên (tiền, tư bản, hài lòng, chu kỳ) và cột phải (bảng c-v-m, dự báo).
-export default function Hud({ game, onHelp }: { game: GameState; onHelp: () => void }) {
+export default function Hud({ game, onHelp, onExit }: { game: GameState; onHelp: () => void; onExit: () => void }) {
   const t = CONFIG.text
   const p = G.project(game)
   const capital = G.totalCapital(game)
@@ -183,6 +183,14 @@ export default function Hud({ game, onHelp }: { game: GameState; onHelp: () => v
             {game.turn}/{CONFIG.totalTurns}
           </div>
         </div>
+        <button
+          onClick={onExit}
+          aria-label="Thoát về màn hình chính"
+          title="Thoát về màn hình chính"
+          className="flex size-10 shrink-0 items-center justify-center border-2 border-card text-card transition-colors hover:bg-card hover:text-ink"
+        >
+          <LogOut size={21} strokeWidth={2.5} />
+        </button>
         <button
           onClick={onHelp}
           className="flex shrink-0 items-center gap-2 border-2 border-card px-3 py-2 text-[16px] font-bold transition-colors hover:bg-card hover:text-ink"

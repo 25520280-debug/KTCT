@@ -10,6 +10,7 @@ import {
   UserPlus,
   Users,
   Vault,
+  X,
   type LucideIcon,
 } from 'lucide-react'
 import { useRef } from 'react'
@@ -68,11 +69,12 @@ interface Props {
   surplusWaiting: boolean
   dispatch: (action: G.Action) => void
   onProduce: () => void
+  onClose: () => void
   tutorialStep: TutorialStep
 }
 
 // Menu nhỏ của từng khu vực, mở bằng E khi đứng gần hoặc phím số 1-5.
-export default function ZoneMenu({ zone, game, surplusWaiting, dispatch, onProduce, tutorialStep }: Props) {
+export default function ZoneMenu({ zone, game, surplusWaiting, dispatch, onProduce, onClose, tutorialStep }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   useFocusNav(ref)
   const t = CONFIG.text
@@ -237,7 +239,8 @@ export default function ZoneMenu({ zone, game, surplusWaiting, dispatch, onProdu
       <div
         ref={ref}
         role="dialog"
-        className="pointer-events-auto flex w-[500px] animate-pop flex-col gap-3 border-[3px] border-ink bg-paper p-4 shadow-hard"
+        className="pointer-events-auto flex min-w-0 max-w-[calc(100%-24px)] flex-col gap-3 overflow-x-hidden overflow-y-auto overscroll-contain border-[3px] border-ink bg-paper p-4 shadow-hard animate-pop"
+        style={{ width: 'min(500px, calc(100% - 24px))', maxHeight: 'calc(100% - 24px)' }}
       >
         <div className="flex items-center gap-3">
           <span className="flex size-[40px] items-center justify-center bg-ink text-amber">
@@ -247,6 +250,14 @@ export default function ZoneMenu({ zone, game, surplusWaiting, dispatch, onProdu
           <span className="ml-auto border-2 border-ink px-2 text-[18px] leading-[26px] font-black">
             {ZONES.find((z) => z.id === zone)!.key}
           </span>
+          <button
+            onClick={onClose}
+            aria-label="Đóng bảng khu vực"
+            title="Đóng"
+            className="btn flex size-[34px] shrink-0 items-center justify-center border-2 border-ink bg-amber"
+          >
+            <X size={20} strokeWidth={3} />
+          </button>
         </div>
         {body}
         <p className="border-l-4 border-amber bg-card px-3 py-2 text-[15px] leading-snug text-ink">{mechanicGuide}</p>

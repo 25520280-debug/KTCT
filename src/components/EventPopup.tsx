@@ -23,9 +23,10 @@ const ICONS: Record<EventKey, LucideIcon> = {
 interface Props {
   game: GameState
   onChange: (game: GameState) => void
+  onExit: () => void
 }
 
-export default function EventPopup({ game, onChange }: Props) {
+export default function EventPopup({ game, onChange, onExit }: Props) {
   const offer = eventOffer(game)
   if (!offer) return null
   const common = CONFIG.text.eventCommon
@@ -36,7 +37,12 @@ export default function EventPopup({ game, onChange }: Props) {
   const body = text.body + (text.bodyReplace && Number(offer.vars.replace) > 0 ? text.bodyReplace : '')
 
   return (
-    <Modal width={760}>
+    <Modal
+      width={760}
+      onClose={onExit}
+      closeLabel="Thoát ván"
+      closeAriaLabel="Thoát ván về màn hình chính"
+    >
       <div className="text-[16px] leading-none font-black tracking-[0.2em] text-red">
         {common.label} · {CONFIG.text.turnName} {game.turn}
       </div>

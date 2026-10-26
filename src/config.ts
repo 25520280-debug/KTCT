@@ -158,7 +158,7 @@ export const CONFIG = {
       goalLabel: 'MỤC TIÊU',
       goal: 'Trong tối đa 6 chu kỳ, vừa đạt mục tiêu tổng tư bản, vừa tích lũy ít nhất 60% thỏa mãn nhu cầu tiêu dùng. Tiêu dùng nhiều làm đầy thanh nhu cầu nhưng rút tiền khỏi vốn sản xuất.',
       controlsLabel: 'ĐIỀU KHIỂN',
-      controls: 'Nhấp vào sàn để nhân vật tự tìm đường ngắn nhất tới đó; nhấp sát công cụ để tương tác · WASD hoặc phím mũi tên để di chuyển thủ công · E để tương tác · phím 1–5 mở nhanh khu vực · Esc để đóng.',
+      controls: 'Nhấp sàn để đi tới đó; WASD/phím mũi tên để di chuyển · E để tương tác · phím 1–5 mở khu vực · nút X hoặc Esc để đóng bảng · nút thoát trên thanh trên cùng để về màn hình chính.',
       steps: [
         {
           title: '1. Chuẩn bị',
@@ -287,7 +287,7 @@ export const CONFIG = {
         gate: 'Cổng xưởng',
       },
       pressE: 'Nhấn E',
-      controls: 'Click sàn: tự tìm đường · WASD/mũi tên: di chuyển · E: tương tác · 1-5: mở nhanh · Esc: đóng',
+      controls: 'Click sàn: tự tìm đường · WASD/mũi tên: di chuyển · E: tương tác · 1-5: mở nhanh · nút X hoặc Esc: đóng bảng',
       menuKeys: '↑ ↓ chọn · Enter bấm · Esc đóng',
       factory: 'Xưởng',
       emptyLot: 'Đất trống',
@@ -360,7 +360,7 @@ export const CONFIG = {
       consumerRemaining: 'Còn cần chi {amount} để đạt mức mục tiêu',
       consumerSatisfied: 'Đã đạt mức thỏa mãn cần thiết',
       consumerStat: 'Thỏa mãn tiêu dùng',
-      timeoutNeed: 'Bạn đã đạt mục tiêu tư bản nhưng chưa đáp ứng đủ nhu cầu tiêu dùng ({satisfaction}%/ {required}%). Hãy phân bổ thêm thặng dư cho tiêu dùng trước khi hết chu kỳ.',
+      timeoutNeed: 'Đạt mục tiêu tư bản, nhưng tiêu dùng mới {satisfaction}% (cần {required}%). Hãy dành thêm thặng dư cho nhu cầu cá nhân.',
       noSurplus: 'Chu kỳ này không có giá trị thặng dư để phân bổ.',
       next: 'Sang chu kỳ sau',
       toEnd: 'Xem phân tích',
@@ -438,10 +438,10 @@ export const CONFIG = {
   // Màn 3: các đoạn văn để bộ luật if/else ghép lại (xem src/game/analysis.ts)
   analysis: {
     verdict: {
-      win: 'Sau {turns} chu kỳ, tư bản {start} đã lớn lên thành {capital}, vượt mục tiêu {target}; mức thỏa mãn tiêu dùng đạt {satisfaction}%, vượt yêu cầu {required}%. Bạn cân đối được cả tích lũy sản xuất lẫn nhu cầu tiêu dùng.',
-      strike: 'Hai lần đình công liên tiếp đã chấm dứt việc sản xuất. Trình độ bóc lột bị đẩy quá mức: nguồn tạo ra giá trị thặng dư là sức lao động, và nó đã từ chối tiếp tục.',
-      bankrupt: 'Tiền mặt không đủ ứng trước cho nguyên liệu và lương. Tư bản chỉ sinh lời khi quay vòng trọn vẹn: dồn quá nhiều vào một khâu thì chu kỳ sau không thể bắt đầu.',
-      timeout: 'Hết {turns} chu kỳ, tư bản đạt {capital}/{target} và thỏa mãn tiêu dùng đạt {satisfaction}% (yêu cầu {required}%). Cần cân đối phần giá trị thặng dư đưa lại sản xuất với phần chi cho nhu cầu cá nhân.',
+      win: 'Đạt mục tiêu {target} sau {turns} chu kỳ; thỏa mãn tiêu dùng đạt {satisfaction}%.',
+      strike: 'Đình công liên tiếp đã dừng sản xuất. Cần cải thiện điều kiện lao động để tiếp tục.',
+      bankrupt: 'Thiếu tiền ứng trước cho chu kỳ. Hãy giữ đủ tiền mặt để tiếp tục sản xuất.',
+      timeout: 'Hết {turns} chu kỳ: tư bản {capital}/{target}, thỏa mãn tiêu dùng {satisfaction}%.',
     },
     essence: {
       summary: 'Bạn thu về tổng cộng {surplus} giá trị thặng dư, đưa {reinvested} trở lại sản xuất và tiêu dùng {consumed}.',

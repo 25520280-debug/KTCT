@@ -3,16 +3,30 @@ import { useEffect, useState, type ReactNode } from 'react'
 export const STAGE_WIDTH = 1280
 export const STAGE_HEIGHT = 720
 
-const fitScale = () => Math.min(window.innerWidth / STAGE_WIDTH, window.innerHeight / STAGE_HEIGHT)
+const viewportSize = () => ({
+  width: window.visualViewport?.width ?? window.innerWidth,
+  height: window.visualViewport?.height ?? window.innerHeight,
+})
 
-// Khung thiết kế cố định 1280x720, co giãn đều để vừa mọi máy chiếu.
+const fitScale = () => {
+  const { width, height } = viewportSize()
+  return Math.min(width / STAGE_WIDTH, height / STAGE_HEIGHT)
+}
+
+// Khung tọa độ cố định để cảnh Phaser và giao diện luôn co giãn cùng một tỷ lệ.
 export default function Stage({ children }: { children: ReactNode }) {
   const [scale, setScale] = useState(fitScale)
 
   useEffect(() => {
     const onResize = () => setScale(fitScale())
     window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
+    window.addEventListener('orientationchange', onResize)
+    window.visualViewport?.addEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('resize', onResize)
+      window.removeEventListener('orientationchange', onResize)
+      window.visualViewport?.removeEventListener('resize', onResize)
+    }
   }, [])
 
   return (
